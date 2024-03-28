@@ -6,7 +6,7 @@ const connectDb = require("./db/db");
 const UserRouter = require("./routes/userRoutes");
 const cors = require("cors");
 const port = process.env.PORT ;
-//connectDb();
+connectDb();
 app.use(
   cors({
     origin: "http://localhost:5173",
