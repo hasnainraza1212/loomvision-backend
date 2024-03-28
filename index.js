@@ -5,8 +5,8 @@ require("dotenv").config({ path: "./.env" });
 const connectDb = require("./db/db");
 const UserRouter = require("./routes/userRoutes");
 const cors = require("cors");
-const port = process.env.PORT || 3000;
-connectDb();
+const port = process.env.PORT ;
+//connectDb();
 app.use(
   cors({
     origin: "http://localhost:5173",
