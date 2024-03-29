@@ -11,7 +11,7 @@ const getLoggedInUserService = async (req, res) => {
       cachedValue = JSON.parse(cachedValue)
       return res
           .status(200)
-          .send({ message: "user fetched successfully!", cachedValue, success: true });
+          .send({ message: "user fetched successfully!", user:cachedValue, success: true });
     }
     console.log("db")
     const user = await User.findOne({ _id: id }).select("-password");

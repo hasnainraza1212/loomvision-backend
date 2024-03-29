@@ -16,10 +16,10 @@ const signUpService = async(req, res)=>{
         // Check if required fields are missing
   
         // Check if the user already exists
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email }).select("-password");
         if (existingUser) {
           console.log(existingUser)
-          return res.status(400).json({ message: "email already exists" });
+          return res.status(400).json({ message: "email already exists" , success:false, user:existingUser});
         }
   
         // Hash the password
@@ -34,8 +34,6 @@ const signUpService = async(req, res)=>{
   
         //   // Save the user in the database
         const user = await newUser.save();
-        delete user._doc.password;
-  
         // Generate a JWT token and set it as a cookie
         const token = jwtConfig.sign(user._id);
       return  res.json({ user, token, message: "Successfully SignUp", success: true });

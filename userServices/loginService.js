@@ -13,22 +13,21 @@ const loginService = async(req, res)=>{
         const { email, password } = req.body;
   
         // Find the user by email
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select("-password");
   
         if (!user) {
-          return res.status(400).json({ message: "Invalid email or password" });
+          return res.status(400).json({ message: "Invalid email or password", success:false, user:{} });
         }
   
         // Compare the provided password with the stored hashed password
         const isPasswordValid = await bcrypt.varifyHash(password, user.password);
   
         if (!isPasswordValid) {
-          return res.status(400).json({ message: "Wrong password" });
+          return res.status(400).json({ message: "Wrong password", user:{}, success:false });
         }
-        delete user._doc.password;
         // Generate a JWT token and set it as a cookie
         const token = jwtConfig.sign(user._id);
-        res.json({ token, success: true, user });
+        res.json({ token, success: true, user , message:"Login successfully!"});
       } catch (error) {
         return res
           .status(500)
