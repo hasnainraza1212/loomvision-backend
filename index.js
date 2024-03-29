@@ -9,7 +9,7 @@ const port = process.env.PORT;
 connectDb();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://hasnain-loomvision.netlify.app"],
     methods: ["GET", "POST"],
     credentials: true,
   })
